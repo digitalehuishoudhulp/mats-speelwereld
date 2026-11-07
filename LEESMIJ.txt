@@ -1,19 +1,24 @@
-MATS' SPEELWERELD — PUBLICEREN
+MATS' SPEELWERELD — NIEUWE VERSIE
 
-Benodigde websitebestanden:
-- index.html (de complete website; alle vormgeving, spelletjes en scripts zitten hierin)
+Inhoud:
+- index.html: de complete website in één bestand.
+- Geen losse afbeeldingen, audio of bibliotheken nodig.
 
-Er zijn geen losse afbeeldingen, muziekbestanden of extra bibliotheken nodig.
+Publiceren via GitHub Pages:
+1. Open de repository: https://github.com/digitalehuishoudhulp/mats-speelwereld
+2. Open index.html en kies het potloodje (Edit this file).
+3. Vervang de volledige inhoud door de inhoud van deze nieuwe index.html.
+4. Kies Commit changes en bevestig.
+5. Wacht tot GitHub Pages opnieuw heeft gepubliceerd. De vaste link blijft:
+   https://digitalehuishoudhulp.github.io/mats-speelwereld/
 
-NETLIFY (handmatig publiceren):
-1. Pak Mats-Speelwereld.zip uit.
-2. Open https://app.netlify.com/drop
-3. Sleep de uitgepakte map Mats-Speelwereld naar het uploadvak.
-4. Wacht tot Netlify de site publiceert en open de getoonde .netlify.app-link.
+De website bevat:
+- 11 kleurplaten.
+- Tekenhoek met kleuren, gum, ongedaan maken en lokaal bewaren.
+- Bouwhoek.
+- Racebaan.
+- Tractorweiland: gras maaien en bloemen verzamelen.
+- Muziek en dans met zachtere, originele synthesizer-melodieën.
+- Kijkhoek met YouTube Kids, het officiële Nijntje-kanaal en ouderbeheer om eigen YouTube-links toe te voegen/verwijderen.
 
-GITHUB:
-- Maak een eigen repository voor Mats' Speelwereld.
-- Upload index.html naar de hoofdmap (root) van de repository.
-- Koppel die repository daarna aan een nieuwe Netlify-site.
-
-Let op: publicatie vereist inloggen op je eigen Netlify- of GitHub-account. Dit pakket publiceert de site niet automatisch.
+Eigen videolinks worden lokaal in de browser bewaard. Ze worden niet automatisch gedeeld met andere apparaten.
