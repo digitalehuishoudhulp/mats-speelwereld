@@ -1,0 +1,262 @@
+<!doctype html>
+<html lang="nl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#72cbe8">
+<title>Mats' Speelwereld</title>
+<style>
+:root{--ink:#26364b;--sky:#81d5f1;--mint:#bceccf;--sun:#ffe18b;--pink:#ffd0dc;--lav:#ded5ff;--paper:#fffdf8;--blue:#56b8e6;--green:#79c98b;--shadow:#d5e5ed}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:#edf8fc;color:var(--ink);font-family:ui-rounded,"Trebuchet MS",system-ui,-apple-system,sans-serif;-webkit-tap-highlight-color:transparent}button,select{font:inherit}button{cursor:pointer;touch-action:manipulation}button:focus-visible{outline:4px solid #2d83b1;outline-offset:3px}.app{max-width:1100px;margin:0 auto;min-height:100vh;padding-bottom:92px}
+.hero{background:linear-gradient(135deg,#72cbe8,#a9e9d2 65%,#fff0a8);padding:calc(18px + env(safe-area-inset-top)) 18px 22px;text-align:center;border-radius:0 0 30px 30px;box-shadow:0 5px 0 #d6ebee}.hero h1{font-size:clamp(28px,6vw,43px);margin:0;line-height:1.08}.hero p{margin:7px 0 0;font-weight:700;font-size:15px}.welcome{display:flex;gap:12px;align-items:center;background:white;border-radius:20px;margin:15px 14px;padding:12px 16px;box-shadow:0 4px 0 var(--shadow)}.welcome .big{font-size:38px}.welcome strong{font-size:18px}.welcome small{display:block;color:#63758a;margin-top:2px}.home-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;padding:0 14px}.tile{border:0;border-radius:22px;min-height:130px;padding:15px;text-align:left;color:var(--ink);box-shadow:0 5px 0 #d2e1e9;display:flex;flex-direction:column;justify-content:space-between;transition:transform .12s}.tile:active{transform:translateY(3px);box-shadow:0 2px 0 #d2e1e9}.tile .ico{font-size:39px}.tile b{font-size:18px}.tile small{font-size:13px;font-weight:650}.tile.color{background:#ffe49a}.tile.draw{background:#ffc9d6}.tile.build{background:#bde9b9}.tile.race{background:#bce8fb}.tile.music{background:#ded5ff}.tile.extra{background:#ffdbb5}
+.screen{display:none;padding:14px}.screen.active{display:block}.panel{background:white;border-radius:24px;padding:16px;box-shadow:0 4px 0 var(--shadow);margin:0 auto;max-width:900px}.panel h2{font-size:22px;margin:0 0 6px}.sub{margin:0 0 14px;color:#5d7083;font-size:14px;line-height:1.4}.toolbar{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin:12px 0}.btn{border:0;border-radius:15px;background:#edf5f8;padding:11px 14px;font-weight:800;color:var(--ink);box-shadow:0 3px 0 #d4e3e9}.btn:active{transform:translateY(2px);box-shadow:0 1px 0 #d4e3e9}.btn.primary{background:#7fd1eb}.btn.green{background:#bce9c4}.btn.pink{background:#ffd0dc}.btn.yellow{background:#ffe49a}.btn.purple{background:#ded5ff}.btn.small{padding:8px 11px;font-size:13px}.back{display:inline-flex;align-items:center;gap:7px;margin:0 0 12px;border:0;border-radius:14px;background:#fff;padding:9px 13px;font-weight:800;color:#40556a;box-shadow:0 3px 0 var(--shadow)}.hint{font-size:13px;color:#65788a;background:#f2f8fa;border-radius:14px;padding:10px 12px;margin-top:12px}
+/* Coloring */
+.color-head{display:flex;align-items:center;justify-content:space-between;gap:8px;flex-wrap:wrap}.page-select{border:2px solid #dbe8ed;background:#f7fbfc;border-radius:13px;padding:9px 10px;font-weight:750;color:var(--ink);max-width:170px}.palette{display:flex;gap:8px;flex-wrap:wrap;align-items:center}.swatch{width:37px;height:37px;border-radius:50%;border:3px solid white;box-shadow:0 0 0 2px #d5e0e6;display:inline-block}.swatch.selected{box-shadow:0 0 0 3px #26364b;transform:scale(1.06)}.svg-wrap{border:2px dashed #c7d7df;border-radius:19px;overflow:hidden;background:#fff;display:grid;place-items:center;min-height:260px}.svg-wrap svg{width:100%;height:auto;max-height:560px;display:block;touch-action:manipulation}.paintable{fill:#fff;stroke:#26364b;stroke-width:5;stroke-linejoin:round;stroke-linecap:round;cursor:pointer}.paintable:active{opacity:.8}.line{fill:none;stroke:#26364b;stroke-width:5;stroke-linejoin:round;stroke-linecap:round;pointer-events:none}.page-tabs{display:flex;gap:8px;overflow-x:auto;padding:2px 1px 8px}.page-tabs button{white-space:nowrap}
+/* Drawing */
+.draw-tools{display:flex;gap:8px;align-items:center;flex-wrap:wrap}.draw-board{background:#fff;border:2px dashed #c7d7df;border-radius:18px;overflow:hidden;line-height:0}.draw-board canvas{width:100%;height: min(58vh,490px);min-height:290px;display:block;touch-action:none;cursor:crosshair}.size-control{display:flex;align-items:center;gap:7px;background:#f2f7f9;padding:8px 10px;border-radius:13px;font-weight:700;font-size:13px}.size-control input{width:90px;accent-color:#348fbd}
+/* Blocks */
+.block-palette{display:flex;gap:9px;flex-wrap:wrap;margin:10px 0 14px}.block-choice{border:2px solid #e1e8ec;border-radius:14px;background:#f8fbfc;min-width:67px;min-height:69px;padding:7px;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:4px;font-size:12px;font-weight:800;touch-action:none}.block-shape{display:block;width:31px;height:31px;background:var(--block);border:2px solid #304154}.block-shape.circle{border-radius:50%}.block-shape.wide{width:42px;height:22px}.block-shape.triangle{clip-path:polygon(50% 0,100% 100%,0 100%);border:0;outline:2px solid #304154}.block-shape.window{background:linear-gradient(90deg,transparent 43%,#304154 43%,#304154 53%,transparent 53%),linear-gradient(transparent 43%,#304154 43%,#304154 53%,transparent 53%),var(--block)}.build-area{position:relative;height:350px;border:3px dashed #b9d6df;border-radius:20px;background:linear-gradient(#eaf8ff 0 73%,#d6f0d0 73%);overflow:hidden;touch-action:none}.build-area:after{content:"";position:absolute;left:0;right:0;bottom:39px;border-top:3px dashed #a8cba0}.placed-block{position:absolute;width:55px;height:55px;border:3px solid #304154;background:var(--block);z-index:2;touch-action:none;display:grid;place-items:center;font-size:20px;user-select:none}.placed-block.circle{border-radius:50%}.placed-block.wide{width:88px;height:38px}.placed-block.triangle{clip-path:polygon(50% 0,100% 100%,0 100%);border:0}.placed-block.selected{outline:3px dashed #26364b;outline-offset:3px}.build-area .cloud{position:absolute;top:26px;right:28px;font-size:38px;opacity:.8;pointer-events:none}.build-area .sunny{position:absolute;top:18px;left:20px;font-size:37px;pointer-events:none}.build-area .ground-note{position:absolute;bottom:9px;left:0;right:0;text-align:center;font-weight:800;color:#66875f;font-size:12px;pointer-events:none}
+/* Race */
+.race-board{background:#d6f3ff;border:2px solid #c3dbe4;border-radius:20px;overflow:hidden;position:relative}.race-board canvas{display:block;width:100%;height:auto;aspect-ratio: 4 / 5;max-height:550px;touch-action:none}.race-hud{display:flex;justify-content:space-between;gap:8px;margin:10px 0;font-weight:900}.race-controls{display:flex;justify-content:center;gap:16px;margin-top:12px}.race-control{width:76px;height:62px;border:0;border-radius:19px;background:#ffe49a;box-shadow:0 4px 0 #dfc776;font-size:30px;font-weight:900;touch-action:none}.race-control:active{transform:translateY(3px);box-shadow:0 1px 0 #dfc776}.race-tip{text-align:center;font-size:12px;color:#687b8e;margin:9px 0 0}
+/* Music */
+.music-hero{background:linear-gradient(120deg,#e7ddff,#dff6ff,#fff0b8);border-radius:19px;padding:15px;text-align:center;margin-bottom:12px}.music-hero .music-emoji{font-size:43px}.music-hero h3{margin:3px 0 4px;font-size:20px}.music-hero p{margin:0;color:#617387;font-size:13px}.music-list{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}.music-choice{border:0;border-radius:17px;padding:12px;background:#f2edff;text-align:left;min-height:102px;color:var(--ink);box-shadow:0 3px 0 #d9d0ef}.music-choice:nth-child(2){background:#e3f7ff;box-shadow:0 3px 0 #cee7f0}.music-choice:nth-child(3){background:#e5f7e5;box-shadow:0 3px 0 #cce6ce}.music-choice:nth-child(4){background:#ffeec4;box-shadow:0 3px 0 #e9d9a9}.music-choice .em{font-size:26px;display:block}.music-choice b{font-size:15px}.music-choice small{display:block;color:#64758a;margin-top:3px;font-size:12px}.music-status{background:#f5f8fa;border-radius:15px;padding:13px;margin-top:12px;display:flex;align-items:center;gap:12px}.music-status .play-icon{font-size:29px}.music-status strong{display:block}.music-status small{color:#66798b}.dance-prompt{border-radius:18px;padding:16px;background:#fff1c9;text-align:center;margin-top:12px;min-height:110px;display:grid;place-items:center}.dance-prompt strong{font-size:22px}.dance-prompt span{font-size:36px}.volume{display:flex;gap:10px;align-items:center;margin:10px 0;font-size:13px;font-weight:800}.volume input{flex:1;accent-color:#8b77d8}
+.bottom-nav{position:fixed;z-index:20;bottom:0;left:0;right:0;background:rgba(255,255,255,.96);backdrop-filter:blur(12px);border-top:1px solid #dce9ed;padding:8px max(8px,env(safe-area-inset-left)) calc(8px + env(safe-area-inset-bottom));display:flex;justify-content:center;gap:4px}.nav-btn{border:0;background:transparent;border-radius:13px;min-width:0;flex:1;max-width:130px;padding:6px 3px;color:#586b7d;font-size:11px;font-weight:800;display:flex;align-items:center;flex-direction:column;gap:2px}.nav-btn span{font-size:21px}.nav-btn.active{background:#e7f5fa;color:#1f5d7d}
+.footer{text-align:center;color:#718397;font-size:11px;padding:18px 10px 8px}.hidden{display:none!important}.toast{position:fixed;z-index:50;left:50%;bottom:94px;transform:translateX(-50%);background:#27384b;color:#fff;padding:10px 15px;border-radius:30px;font-weight:750;font-size:13px;box-shadow:0 4px 15px #24364b44;max-width:90vw;text-align:center}.dancing{animation:bounce .42s infinite alternate}@keyframes bounce{to{transform:translateY(-8px) rotate(3deg)}}
+@media(min-width:720px){.home-grid{grid-template-columns:repeat(3,minmax(0,1fr));padding:0 20px}.welcome{margin:18px 20px}.tile{min-height:150px}.screen{padding:20px}.panel{padding:22px}.music-list{grid-template-columns:repeat(4,minmax(0,1fr))}}
+@media(max-width:380px){.hero h1{font-size:26px}.tile{min-height:115px;padding:12px}.tile .ico{font-size:33px}.tile b{font-size:16px}.nav-btn{font-size:10px}.nav-btn span{font-size:19px}.race-control{width:68px}}
+@media print{body{background:white!important}.app{padding:0;max-width:none}.hero,.welcome,.home-grid,.bottom-nav,.back,.toolbar,.hint,.sub,.footer,.no-print{display:none!important}.screen{display:none!important;padding:0!important}.screen.print-target{display:block!important}.toolbar,.page-tabs,.palette,.color-head .page-select{display:none!important}.panel{box-shadow:none!important;border:0!important;padding:0!important;margin:0!important;max-width:none!important}.panel h2{font-size:16pt;margin:0 0 8pt}.svg-wrap{border:0!important;min-height:0!important}.svg-wrap svg{max-height:92vh!important;width:auto!important;max-width:100%!important}.draw-board{border:0!important}.draw-board canvas{height:auto!important;max-height:92vh!important;width:auto!important;max-width:100%!important;touch-action:auto!important}.build-area{border:0!important}}
+</style>
+</head>
+<body>
+<div class="app">
+<header class="hero"><h1>🌈 Mats' Speelwereld</h1><p>Spelen, kleuren, bouwen, racen en dansen!</p></header>
+<div class="welcome" id="welcome"><span class="big">🚜</span><div><strong>Hoi Mats!</strong><small>Waar heb je vandaag zin in?</small></div></div>
+<section class="home-grid" id="homeGrid" aria-label="Kies een spel">
+<button class="tile color" data-go="color"><span class="ico">🖍️</span><span><b>Kleurstudio</b><br><small>Kleur tractors, auto's en dieren</small></span></button>
+<button class="tile draw" data-go="draw"><span class="ico">🎨</span><span><b>Tekenhoek</b><br><small>Maak je eigen meesterwerk</small></span></button>
+<button class="tile build" data-go="build"><span class="ico">🧱</span><span><b>Bouwhoek</b><br><small>Sleep met de blokken</small></span></button>
+<button class="tile race" data-go="race"><span class="ico">🏎️</span><span><b>Racebaan</b><br><small>Ontwijk de obstakels!</small></span></button>
+<button class="tile music" data-go="music"><span class="ico">🎵</span><span><b>Muziek & dans</b><br><small>Dans, stop en beweeg</small></span></button>
+<button class="tile extra" data-go="draw"><span class="ico">🐶</span><span><b>Hondenpret</b><br><small>Teken een vrolijk hondenvriendje</small></span></button>
+</section>
+
+<section class="screen" id="colorScreen">
+<button class="back" data-home>← Terug naar alle spelletjes</button>
+<div class="panel">
+<div class="color-head"><div><h2>🖍️ Kleurstudio</h2><p class="sub">Kies een kleur en tik op een stukje van de tekening.</p></div><select id="colorPage" class="page-select" aria-label="Kies een kleurplaat"><option value="tractor">🚜 Tractor</option><option value="racecar">🏎️ Raceauto</option><option value="puppy">🐶 Blauwe puppy</option><option value="dino">🦕 Dino</option></select></div>
+<div class="page-tabs"><button class="btn small yellow" data-page="tractor">🚜 Tractor</button><button class="btn small" data-page="racecar">🏎️ Raceauto</button><button class="btn small" data-page="puppy">🐶 Puppy</button><button class="btn small" data-page="dino">🦕 Dino</button></div>
+<div class="palette" id="colorPalette" aria-label="Kleurenpalet"></div>
+<div class="svg-wrap" id="colorArt"></div>
+<div class="toolbar"><button class="btn yellow" id="resetColor">↺ Opnieuw</button><button class="btn primary" id="printColor">🖨️ Print kleurplaat</button></div>
+<div class="hint">Tip: je kunt elk vakje opnieuw kleuren. Kies bijvoorbeeld groen voor de tractor en blauw voor de lucht.</div>
+</div></section>
+
+<section class="screen" id="drawScreen">
+<button class="back" data-home>← Terug naar alle spelletjes</button>
+<div class="panel">
+<h2>🎨 Tekenhoek</h2><p class="sub">Teken met je vinger of met een Apple Pencil. Kies hieronder je kleur en potlooddikte.</p>
+<div class="draw-tools"><div class="palette" id="drawPalette"></div><label class="size-control">Dikte <input id="brushSize" type="range" min="3" max="30" value="9"></label></div>
+<div class="toolbar"><button class="btn" id="eraser">🧽 Gum</button><button class="btn" id="undoDraw">↶ Ongedaan</button><button class="btn pink" id="clearDraw">🗑️ Leeg papier</button><button class="btn green" id="saveDraw">⬇️ Bewaar tekening</button><button class="btn primary" id="printDraw">🖨️ Print tekening</button></div>
+<div class="draw-board"><canvas id="drawCanvas" aria-label="Tekenveld"></canvas></div>
+<div class="toolbar"><button class="btn yellow" id="drawIdea">✨ Geef me een tekenidee</button><strong id="drawPrompt" aria-live="polite">Wat ga jij maken?</strong></div>
+<div class="hint">Je tekening wordt op dit apparaat bewaard. Open deze speelwereld later opnieuw om verder te tekenen.</div>
+</div></section>
+
+<section class="screen" id="buildScreen">
+<button class="back" data-home>← Terug naar alle spelletjes</button>
+<div class="panel">
+<h2>🧱 Bouwhoek</h2><p class="sub">Kies een blokje en sleep het naar je bouwplaats. Op een iPad kun je de blokjes met je vinger verplaatsen.</p>
+<div class="block-palette" id="blockPalette">
+<button class="block-choice" data-shape="square" data-color="#ffcc62"><i class="block-shape" style="--block:#ffcc62"></i>Vierkant</button>
+<button class="block-choice" data-shape="wide" data-color="#70c9ed"><i class="block-shape wide" style="--block:#70c9ed"></i>Lang</button>
+<button class="block-choice" data-shape="circle" data-color="#ff9eb4"><i class="block-shape circle" style="--block:#ff9eb4"></i>Rond</button>
+<button class="block-choice" data-shape="triangle" data-color="#8dd69b"><i class="block-shape triangle" style="--block:#8dd69b"></i>Driehoek</button>
+<button class="block-choice" data-shape="window" data-color="#b8a5ee"><i class="block-shape window" style="--block:#b8a5ee"></i>Raam</button>
+</div>
+<div class="build-area" id="buildArea" aria-label="Bouwplaats"><span class="sunny">☀️</span><span class="cloud">☁️</span><span class="ground-note" id="blockCount">Je bouwplaats is klaar!</span></div>
+<div class="toolbar"><button class="btn" id="undoBlock">↶ Laatste blok weg</button><button class="btn pink" id="clearBlocks">🗑️ Opnieuw bouwen</button><button class="btn yellow" id="buildIdea">✨ Bouwopdracht</button></div>
+<div class="hint" id="buildHint">Bouw bijvoorbeeld een huis, een garage voor de tractor of een hoge toren. Sleep een blokje in je bouwplaats naar een andere plek.</div>
+</div></section>
+
+<section class="screen" id="raceScreen">
+<button class="back" data-home>← Terug naar alle spelletjes</button>
+<div class="panel">
+<h2>🏎️ Mats' Racebaan</h2><p class="sub">Bestuur je raceauto, blijf op de weg en ontwijk de andere auto's!</p>
+<div class="race-hud"><span>⭐ Punten: <b id="raceScore">0</b></span><span>🏆 Beste score: <b id="bestScore">0</b></span></div>
+<div class="race-board"><canvas id="raceCanvas" width="480" height="600" aria-label="Racegame"></canvas></div>
+<div class="race-controls"><button class="race-control" id="leftRace" aria-label="Naar links">⬅️</button><button class="race-control" id="startRace">▶️ Start</button><button class="race-control" id="rightRace" aria-label="Naar rechts">➡️</button></div>
+<p class="race-tip">Gebruik de pijlen of de toetsen ← en →. Hoe langer je rijdt, hoe sneller het gaat!</p>
+</div></section>
+
+<section class="screen" id="musicScreen">
+<button class="back" data-home>← Terug naar alle spelletjes</button>
+<div class="panel">
+<h2>🎶 Muziek & dans</h2><p class="sub">Kies een vrolijk muziekje en doe mee. Alle melodietjes zijn speciaal voor Mats gemaakt.</p>
+<div class="music-hero"><div class="music-emoji" id="musicEmoji">🎵</div><h3 id="musicTitle">Tijd voor een dansje!</h3><p id="musicDescription">Kies een muziekspelletje hieronder.</p></div>
+<div class="music-list">
+<button class="music-choice" data-track="tractor"><span class="em">🚜</span><b>Tractorboogie</b><small>Toeter, stamp en draai!</small></button>
+<button class="music-choice" data-track="animals"><span class="em">🐸</span><b>Dierendans</b><small>Spring als een kikker.</small></button>
+<button class="music-choice" data-track="party"><span class="em">🎉</span><b>Feestmuziek</b><small>Vrij dansen en springen.</small></button>
+<button class="music-choice" data-track="stop"><span class="em">🕺</span><b>Stopdans</b><small>Dans… en bevries als het stil wordt!</small></button>
+</div>
+<div class="music-status"><span class="play-icon" id="playIcon">🔈</span><div style="flex:1"><strong id="musicStatus">Er speelt nog geen muziek</strong><small id="musicSub">Tik op een muziekkaart om te beginnen.</small></div><button class="btn purple" id="stopMusic">■ Stop</button></div>
+<div class="volume"><span>🔉 Volume</span><input type="range" id="volume" min="0" max="100" value="55"><span>🔊</span></div>
+<div class="dance-prompt" id="dancePrompt"><div><span>💃</span><br><strong>Klaar om te dansen?</strong></div></div>
+<div class="toolbar"><button class="btn yellow" id="danceMove">🎲 Nieuwe dansbeweging</button><button class="btn green" id="sayMove">🔊 Zeg de beweging</button></div>
+<div class="hint">Zet het geluid aan met de volumeknop van je iPhone of iPad. Tik eerst op een muziekkaart; daarna start de muziek.</div>
+</div></section>
+
+<div class="footer">Mats' Speelwereld · Werkt in Safari op iPhone en iPad · Geen account nodig</div>
+</div>
+<nav class="bottom-nav" aria-label="Hoofdnavigatie">
+<button class="nav-btn active" data-nav="home"><span>🏠</span>Home</button>
+<button class="nav-btn" data-nav="color"><span>🖍️</span>Kleuren</button>
+<button class="nav-btn" data-nav="draw"><span>🎨</span>Tekenen</button>
+<button class="nav-btn" data-nav="build"><span>🧱</span>Bouwen</button>
+<button class="nav-btn" data-nav="race"><span>🏎️</span>Racen</button>
+<button class="nav-btn" data-nav="music"><span>🎵</span>Dans</button>
+</nav>
+<div id="toast" class="toast hidden" role="status" aria-live="polite"></div>
+<script>
+(() => {
+'use strict';
+const $ = (s, root=document) => root.querySelector(s);
+const $$ = (s, root=document) => [...root.querySelectorAll(s)];
+let toastTimer;
+function toast(message){const el=$('#toast');el.textContent=message;el.classList.remove('hidden');clearTimeout(toastTimer);toastTimer=setTimeout(()=>el.classList.add('hidden'),2100)}
+function showScreen(name){
+  $('#welcome').classList.toggle('hidden',name!=='home');$('#homeGrid').classList.toggle('hidden',name!=='home');
+  $$('.screen').forEach(s=>s.classList.toggle('active',s.id===name+'Screen'));
+  $$('.nav-btn').forEach(b=>b.classList.toggle('active',b.dataset.nav===name));
+  window.scrollTo({top:0,behavior:'smooth'});
+  if(name==='race') drawRaceIdle();
+  if(name==='draw') requestAnimationFrame(()=>setupDrawCanvas(drawInitialized));
+}
+$$('[data-go]').forEach(b=>b.addEventListener('click',()=>showScreen(b.dataset.go)));
+$$('[data-home]').forEach(b=>b.addEventListener('click',()=>showScreen('home')));
+$$('[data-nav]').forEach(b=>b.addEventListener('click',()=>showScreen(b.dataset.nav)));
+
+// Coloring pages: tap any white section to fill it.
+const colorSets={
+tractor:`<svg viewBox="0 0 700 430" role="img" aria-label="Kleurplaat van een tractor">
+<path class="paintable" d="M0 350 Q130 325 260 350 T520 350 T700 340 V430 H0Z" data-paint="yes"/>
+<circle class="paintable" cx="580" cy="86" r="48" data-paint="yes"/><g class="paintable" data-paint="yes"><path d="M72 114q18-39 47-6q34-42 63 0q30-24 50 8q-6 24-31 24H94q-26 0-22-26Z"/></g>
+<circle class="paintable" cx="225" cy="320" r="79" data-paint="yes"/><circle class="paintable" cx="225" cy="320" r="32" data-paint="yes"/>
+<circle class="paintable" cx="508" cy="338" r="48" data-paint="yes"/><circle class="paintable" cx="508" cy="338" r="19" data-paint="yes"/>
+<path class="paintable" d="M157 268h-52v-83h69l37-105h151l58 109h74v76h-24l-11 42h-29a80 80 0 0 0-151 0h-9a79 79 0 0 0-150-39Z" data-paint="yes"/>
+<path class="paintable" d="M224 93l-14-43h109l19 43Z" data-paint="yes"/><path class="paintable" d="M241 102v78h103l-39-78Z" data-paint="yes"/><path class="paintable" d="M358 102l46 88h-60l-39-88Z" data-paint="yes"/>
+<path class="paintable" d="M390 190h62v28h-62Z" data-paint="yes"/><path class="paintable" d="M122 183h43v25h-43Z" data-paint="yes"/><path class="paintable" d="M438 235h54v24h-54Z" data-paint="yes"/>
+<path class="line" d="M20 390q25-28 50 0m30-4q25-28 50 0m340 5q25-28 50 0m45-8q25-28 50 0M275 48V23h58v27"/>
+</svg>`,
+racecar:`<svg viewBox="0 0 700 430" role="img" aria-label="Kleurplaat van een raceauto">
+<path class="paintable" d="M0 342h700v88H0Z" data-paint="yes"/><path class="paintable" d="M115 288l35-74q18-31 58-37l78-8 55-65h121l63 75 64 21q31 10 43 45l12 43H115Z" data-paint="yes"/>
+<path class="paintable" d="M282 185l48-62h115l48 62Z" data-paint="yes"/><path class="paintable" d="M343 129h-14l-40 55h64Z" data-paint="yes"/><path class="paintable" d="M353 129h85l44 55H353Z" data-paint="yes"/>
+<circle class="paintable" cx="225" cy="300" r="48" data-paint="yes"/><circle class="paintable" cx="225" cy="300" r="19" data-paint="yes"/><circle class="paintable" cx="525" cy="300" r="48" data-paint="yes"/><circle class="paintable" cx="525" cy="300" r="19" data-paint="yes"/>
+<path class="paintable" d="M115 265h60v30h-60Z" data-paint="yes"/><path class="paintable" d="M575 264h43v28h-43Z" data-paint="yes"/><path class="paintable" d="M315 223h110v48H315Z" data-paint="yes"/><path class="line" d="M20 385h660M82 399h65m406 0h65"/>
+</svg>`,
+puppy:`<svg viewBox="0 0 700 430" role="img" aria-label="Kleurplaat van een vrolijke puppy">
+<path class="paintable" d="M0 360q140-35 280 0t280 0t140 0v70H0Z" data-paint="yes"/><circle class="paintable" cx="575" cy="82" r="45" data-paint="yes"/>
+<path class="paintable" d="M240 163q-82-100-137-27q-31 52 49 136l85-31Z" data-paint="yes"/><path class="paintable" d="M461 163q82-100 137-27q31 52-49 136l-85-31Z" data-paint="yes"/>
+<path class="paintable" d="M220 187q0-110 130-110t130 110v100q0 92-130 92t-130-92Z" data-paint="yes"/>
+<ellipse class="paintable" cx="292" cy="225" rx="18" ry="25" data-paint="yes"/><ellipse class="paintable" cx="408" cy="225" rx="18" ry="25" data-paint="yes"/><path class="paintable" d="M319 270q31-32 62 0q-1 43-31 43t-31-43Z" data-paint="yes"/>
+<path class="paintable" d="M274 346q-20 49-10 57h61l15-43m49-14q20 49 10 57h-61l-15-43" data-paint="yes"/><path class="paintable" d="M252 312q-72 5-91 65q-6 23 21 26q29 4 43-24l58-24" data-paint="yes"/>
+<path class="line" d="M300 262q50 35 100 0M350 313v18m-42-2q42 39 84 0"/>
+</svg>`,
+dino:`<svg viewBox="0 0 700 430" role="img" aria-label="Kleurplaat van een vriendelijke dinosaurus">
+<path class="paintable" d="M0 355q140-30 280 0t280 0t140 0v75H0Z" data-paint="yes"/><circle class="paintable" cx="570" cy="80" r="42" data-paint="yes"/>
+<path class="paintable" d="M145 302q45-95 131-103l44-94 48 54 49-73 51 79q96 39 105 137l-29 43H186Z" data-paint="yes"/>
+<path class="paintable" d="M284 199l-26-64 52 23 29-72 42 64 45-53 23 93" data-paint="yes"/><path class="paintable" d="M155 288q-91-2-114 51q-9 21 19 24q74 1 139-29" data-paint="yes"/>
+<ellipse class="paintable" cx="456" cy="208" rx="15" ry="21" data-paint="yes"/><path class="paintable" d="M476 246q-38 42-81 0q17-35 42-28q27-7 39 28Z" data-paint="yes"/>
+<path class="paintable" d="M256 312l-9 55h58l12-50m94-4 12 54h57l-11-69" data-paint="yes"/><path class="line" d="M379 250q37 22 72 0m-95-42h1"/>
+</svg>`
+};
+const colorNames=['#ff595e','#ff924c','#ffd166','#8acb88','#4db6ac','#55a7e8','#7f79d7','#d58bd8','#ffb7c5','#8b684b','#ffffff','#26364b'];
+let currentColor='#ff595e',currentPage='tractor';
+function drawColorPalette(){const root=$('#colorPalette');root.innerHTML='';colorNames.forEach((c,i)=>{const b=document.createElement('button');b.className='swatch'+(i===0?' selected':'');b.style.background=c;b.setAttribute('aria-label','Kies kleur '+c);b.title=c;b.addEventListener('click',()=>{currentColor=c;$$('.swatch',root).forEach(x=>x.classList.remove('selected'));b.classList.add('selected')});root.appendChild(b)})}
+function loadColorPage(page){currentPage=page;$('#colorPage').value=page;$('#colorArt').innerHTML=colorSets[page];$$('[data-page]').forEach(b=>b.classList.toggle('primary',b.dataset.page===page));}
+$('#colorArt').addEventListener('click',e=>{const target=e.target.closest('[data-paint]');if(target)target.style.fill=currentColor});
+$('#colorPage').addEventListener('change',e=>loadColorPage(e.target.value));$$('[data-page]').forEach(b=>b.addEventListener('click',()=>loadColorPage(b.dataset.page)));
+$('#resetColor').addEventListener('click',()=>{loadColorPage(currentPage);toast('De kleurplaat is weer wit!')});
+$('#printColor').addEventListener('click',()=>printScreen('colorScreen'));
+drawColorPalette();loadColorPage('tractor');
+
+// Free drawing canvas: finger and Apple Pencil support, with undo and local saving.
+const drawCanvas=$('#drawCanvas'),dctx=drawCanvas.getContext('2d');let drawColor='#ff595e',brush=9,eraser=false,history=[],drawing=false,lastPoint=null;
+const drawColors=['#26364b','#ff595e','#ff924c','#ffd166','#8acb88','#55a7e8','#7f79d7','#d58bd8','#ffb7c5','#ffffff'];
+function setupDrawCanvas(restore=true){const old=drawInitialized&&restore&&drawCanvas.width?drawCanvas.toDataURL():null;const rect=drawCanvas.getBoundingClientRect();const dpr=Math.min(window.devicePixelRatio||1,2);drawCanvas.width=Math.max(1,Math.floor(rect.width*dpr));drawCanvas.height=Math.max(1,Math.floor(rect.height*dpr));dctx.setTransform(dpr,0,0,dpr,0,0);dctx.fillStyle='#fff';dctx.fillRect(0,0,rect.width,rect.height);if(old){const img=new Image();img.onload=()=>dctx.drawImage(img,0,0,rect.width,rect.height);img.src=old}else{try{const saved=localStorage.getItem('matsDrawing');if(saved){const img=new Image();img.onload=()=>dctx.drawImage(img,0,0,rect.width,rect.height);img.src=saved}}catch(_){}}history=[];drawInitialized=true}
+function snapshotDraw(){try{history.push(drawCanvas.toDataURL());if(history.length>15)history.shift()}catch(_){}}
+function drawPoint(e){const r=drawCanvas.getBoundingClientRect();return{x:e.clientX-r.left,y:e.clientY-r.top}}
+drawCanvas.addEventListener('pointerdown',e=>{e.preventDefault();drawing=true;drawCanvas.setPointerCapture(e.pointerId);snapshotDraw();lastPoint=drawPoint(e);dctx.beginPath();dctx.moveTo(lastPoint.x,lastPoint.y);dctx.lineCap='round';dctx.lineJoin='round';dctx.strokeStyle=eraser?'#ffffff':drawColor;dctx.lineWidth=brush});
+drawCanvas.addEventListener('pointermove',e=>{if(!drawing)return;e.preventDefault();const p=drawPoint(e);dctx.lineTo(p.x,p.y);dctx.stroke();lastPoint=p});
+function finishDraw(){if(!drawing)return;drawing=false;dctx.closePath();try{localStorage.setItem('matsDrawing',drawCanvas.toDataURL())}catch(_){}}
+drawCanvas.addEventListener('pointerup',finishDraw);drawCanvas.addEventListener('pointercancel',finishDraw);drawCanvas.addEventListener('lostpointercapture',finishDraw);
+function drawPalette(){const root=$('#drawPalette');drawColors.forEach((c,i)=>{const b=document.createElement('button');b.className='swatch'+(i===0?' selected':'');b.style.background=c;b.setAttribute('aria-label','Tekenkleur '+c);b.addEventListener('click',()=>{drawColor=c;eraser=false;$('#eraser').classList.remove('primary');$$('.swatch',root).forEach(x=>x.classList.remove('selected'));b.classList.add('selected')});root.appendChild(b)})}
+drawPalette();$('#brushSize').addEventListener('input',e=>brush=Number(e.target.value));
+$('#eraser').addEventListener('click',()=>{eraser=!eraser;$('#eraser').classList.toggle('primary',eraser);toast(eraser?'Gum aan':'Potlood aan')});
+$('#undoDraw').addEventListener('click',()=>{const prev=history.pop();if(!prev){toast('Niets om ongedaan te maken');return}const img=new Image();img.onload=()=>{dctx.clearRect(0,0,drawCanvas.width,drawCanvas.height);const r=drawCanvas.getBoundingClientRect();dctx.drawImage(img,0,0,r.width,r.height);try{localStorage.setItem('matsDrawing',drawCanvas.toDataURL())}catch(_){}};img.src=prev});
+$('#clearDraw').addEventListener('click',()=>{if(!confirm('Wil je het tekenpapier leegmaken?'))return;snapshotDraw();const r=drawCanvas.getBoundingClientRect();dctx.fillStyle='#fff';dctx.fillRect(0,0,r.width,r.height);try{localStorage.removeItem('matsDrawing')}catch(_){}toast('Je hebt weer een leeg vel!')});
+$('#saveDraw').addEventListener('click',()=>{const a=document.createElement('a');a.download='tekening-van-mats.png';a.href=drawCanvas.toDataURL('image/png');a.click();toast('Je tekening is klaar om te bewaren')});
+$('#printDraw').addEventListener('click',()=>printScreen('drawScreen'));
+const ideas=['Teken een grote tractor 🚜','Maak een raceauto 🏎️','Teken een huis met een tuin 🏡','Maak een vrolijke blauwe puppy 🐶','Teken een dino met stekels 🦕','Maak een regenboog 🌈','Teken een boerderij met dieren 🐮'];
+$('#drawIdea').addEventListener('click',()=>$('#drawPrompt').textContent=ideas[Math.floor(Math.random()*ideas.length)]);
+let resizeDrawTimer;window.addEventListener('resize',()=>{clearTimeout(resizeDrawTimer);resizeDrawTimer=setTimeout(()=>{if($('#drawScreen').classList.contains('active'))setupDrawCanvas(true)},180)});
+
+// Drag / move / stack blocks on a touch-friendly building board.
+const buildArea=$('#buildArea');let blockSerial=0,blockPositions=[];
+function blockCount(){const n=$$('.placed-block',buildArea).length;$('#blockCount').textContent=n?`Je hebt ${n} blok${n===1?'je':'jes'} gebouwd!`:'Je bouwplaats is klaar!'}
+function putBlock(shape,color,x,y){const b=document.createElement('div');b.className='placed-block '+(shape==='wide'?'wide':shape==='circle'?'circle':shape==='triangle'?'triangle':'');b.style.setProperty('--block',color);b.dataset.id=String(++blockSerial);b.dataset.shape=shape;b.setAttribute('aria-label','Bouwblok, tik om te verplaatsen');const maxX=Math.max(0,buildArea.clientWidth-(shape==='wide'?88:55));const maxY=buildArea.clientHeight-100;b.style.left=Math.max(4,Math.min(maxX,x))+'px';b.style.top=Math.max(75,Math.min(maxY,y))+'px';buildArea.appendChild(b);blockPositions.push(b);blockCount();return b}
+let movingBlock=null,moveOffset={x:0,y:0},moveStart={x:0,y:0};
+function startBlockMove(el,e){movingBlock=el;const r=el.getBoundingClientRect();moveOffset.x=e.clientX-r.left;moveOffset.y=e.clientY-r.top;moveStart={x:e.clientX,y:e.clientY};el.classList.add('selected');}
+$('#blockPalette').addEventListener('pointerdown',e=>{const source=e.target.closest('[data-shape]');if(!source)return;e.preventDefault();const ghost=putBlock(source.dataset.shape,source.dataset.color,Math.max(4,buildArea.clientWidth/2-25),100);startBlockMove(ghost,e);moveOffset={x:27,y:27};document.addEventListener('pointermove',moveBlock);document.addEventListener('pointerup',endBlock,{once:true})});
+buildArea.addEventListener('pointerdown',e=>{const el=e.target.closest('.placed-block');if(!el)return;e.preventDefault();startBlockMove(el,e);document.addEventListener('pointermove',moveBlock);document.addEventListener('pointerup',endBlock,{once:true})});
+function moveBlock(e){if(!movingBlock)return;const r=buildArea.getBoundingClientRect();const w=movingBlock.classList.contains('wide')?88:55;const x=e.clientX-r.left-moveOffset.x,y=e.clientY-r.top-moveOffset.y;movingBlock.style.left=Math.max(0,Math.min(buildArea.clientWidth-w,x))+'px';movingBlock.style.top=Math.max(65,Math.min(buildArea.clientHeight-68,y))+'px'}
+function endBlock(){if(!movingBlock)return;movingBlock.classList.remove('selected');movingBlock=null;document.removeEventListener('pointermove',moveBlock);blockCount()}
+$('#undoBlock').addEventListener('click',()=>{const b=buildArea.querySelector('.placed-block:last-of-type');if(b)b.remove();blockCount()});
+$('#clearBlocks').addEventListener('click',()=>{ $$('.placed-block',buildArea).forEach(b=>b.remove());blockPositions=[];blockCount();toast('De bouwplaats is weer leeg')});
+const buildIdeas=['Bouw een garage voor een tractor 🚜','Maak een hoge toren 🗼','Bouw een huis met ramen 🏡','Maak een brug waar een auto overheen kan 🌉','Bouw een dierenstal 🐴','Maak een racecircuit 🏎️'];
+$('#buildIdea').addEventListener('click',()=>{const t=buildIdeas[Math.floor(Math.random()*buildIdeas.length)];$('#buildHint').textContent='Bouwopdracht: '+t});
+
+// Simple touch-controlled racing game.
+const raceCanvas=$('#raceCanvas'),rctx=raceCanvas.getContext('2d');let raceRunning=false,raceOver=false,playerLane=1,obstacles=[],raceScore=0,lastSpawn=0,lastFrame=0,raceSpeed=210,bestScore=0,raceRaf=0;
+try{bestScore=Number(localStorage.getItem('matsBestRace')||0)}catch(_){}$('#bestScore').textContent=bestScore;
+function drawCar(ctx,x,y,w,h,color,player=false){ctx.save();ctx.translate(x,y);ctx.fillStyle='#24364b';ctx.fillRect(-w*.58,-h*.34,w*.17,h*.28);ctx.fillRect(w*.41,-h*.34,w*.17,h*.28);ctx.fillRect(-w*.58,h*.12,w*.17,h*.28);ctx.fillRect(w*.41,h*.12,w*.17,h*.28);ctx.fillStyle=color;ctx.beginPath();ctx.roundRect(-w/2,-h/2,w,h,9);ctx.fill();ctx.fillStyle=player?'#e4f8ff':'#fff';ctx.beginPath();ctx.roundRect(-w*.31,-h*.3,w*.62,h*.34,6);ctx.fill();ctx.fillStyle='#ffef96';ctx.fillRect(-w*.38,h*.33,w*.2,5);ctx.fillRect(w*.18,h*.33,w*.2,5);ctx.restore()}
+function renderRace(){const w=raceCanvas.width,h=raceCanvas.height;rctx.clearRect(0,0,w,h);rctx.fillStyle='#bde8a6';rctx.fillRect(0,0,w,h);rctx.fillStyle='#555e67';rctx.fillRect(60,0,w-120,h);rctx.fillStyle='#fff';rctx.fillRect(66,0,6,h);rctx.fillRect(w-72,0,6,h);for(let i=1;i<=2;i++){rctx.strokeStyle='#f6f0c8';rctx.lineWidth=5;rctx.setLineDash([35,28]);rctx.lineDashOffset=-(raceScore*2%63);rctx.beginPath();rctx.moveTo(60+(w-120)*i/3,0);rctx.lineTo(60+(w-120)*i/3,h);rctx.stroke()}rctx.setLineDash([]);for(const o of obstacles)drawCar(rctx,60+(w-120)*(o.lane+.5)/3,o.y,48,76,o.color);const px=60+(w-120)*(playerLane+.5)/3;drawCar(rctx,px,h-115,54,86,'#ffcf52',true);if(!raceRunning){rctx.fillStyle='#26364b';rctx.textAlign='center';rctx.font='bold 30px system-ui';rctx.fillText(raceOver?'Oeps! Probeer opnieuw':'Klaar voor de start?',w/2,h*.43);rctx.font='bold 18px system-ui';rctx.fillText(raceOver?'Tik op Start om weer te racen':'Tik op Start en ontwijk de auto’s',w/2,h*.49)}}
+function drawRaceIdle(){if(!raceRunning)renderRace()}
+function moveLane(dir){if(!raceRunning)return;playerLane=Math.max(0,Math.min(2,playerLane+dir));}
+$('#leftRace').addEventListener('pointerdown',e=>{e.preventDefault();moveLane(-1)});$('#rightRace').addEventListener('pointerdown',e=>{e.preventDefault();moveLane(1)});
+window.addEventListener('keydown',e=>{if(e.key==='ArrowLeft'){e.preventDefault();moveLane(-1)}if(e.key==='ArrowRight'){e.preventDefault();moveLane(1)}});
+function startRace(){if(raceRaf)cancelAnimationFrame(raceRaf);raceRaf=0;raceRunning=true;raceOver=false;raceScore=0;playerLane=1;obstacles=[];lastSpawn=0;lastFrame=performance.now();raceSpeed=210;$('#raceScore').textContent='0';$('#startRace').textContent='↻ Opnieuw';raceRaf=requestAnimationFrame(raceLoop)}
+function raceLoop(now){if(!raceRunning)return;const dt=Math.min(.04,(now-lastFrame)/1000||0);lastFrame=now;raceSpeed=Math.min(410,210+raceScore*1.8);lastSpawn+=dt*1000;if(lastSpawn>Math.max(580,1250-raceScore*5)){lastSpawn=0;const lane=Math.floor(Math.random()*3);obstacles.push({lane,y:-85,color:['#f18a91','#7cbbec','#b899e8','#e6a55f'][Math.floor(Math.random()*4)]})}obstacles.forEach(o=>o.y+=raceSpeed*dt);obstacles=obstacles.filter(o=>o.y<raceCanvas.height+90);const playerY=raceCanvas.height-115;for(const o of obstacles){if(o.lane===playerLane&&Math.abs(o.y-playerY)<67){endRace();return}}raceScore+=dt*10;$('#raceScore').textContent=Math.floor(raceScore);renderRace();raceRaf=requestAnimationFrame(raceLoop)}
+function endRace(){raceRunning=false;raceOver=true;if(raceRaf)cancelAnimationFrame(raceRaf);raceRaf=0;if(Math.floor(raceScore)>bestScore){bestScore=Math.floor(raceScore);$('#bestScore').textContent=bestScore;try{localStorage.setItem('matsBestRace',String(bestScore))}catch(_){}}renderRace();$('#startRace').textContent='▶️ Opnieuw';toast('Botsing! Je haalde '+Math.floor(raceScore)+' punten.')}
+$('#startRace').addEventListener('click',startRace);renderRace();
+
+// Original, synthesized little tunes (no external audio or copyrighted recordings).
+const tracks={
+tractor:{title:'Tractorboogie',desc:'Toeter, stamp en draai!',emoji:'🚜',notes:[392,392,523,440,392,330,349,392,523,494,440,392,330,349,392,330]},
+animals:{title:'Dierendans',desc:'Spring als een kikker en waggel als een eend!',emoji:'🐸',notes:[523,659,784,659,587,698,880,698,523,659,784,659,587,523,440,523]},
+party:{title:'Feestmuziek',desc:'Handen in de lucht en dans maar!',emoji:'🎉',notes:[392,523,659,784,659,523,440,587,698,880,698,587,523,659,784,659]},
+stop:{title:'Stopdans',desc:'Dans zolang de muziek speelt. Bevries bij stilte!',emoji:'🕺',notes:[440,523,587,659,784,659,587,523,440,523,659,784,880,784,659,523]}
+};
+let audioCtx=null,masterGain=null,musicTimer=null,stopTimer=null,musicActive=false,trackName=null,noteStep=0,danceActive=true,volumeValue=.55,currentMove='Stamp als een olifant!';
+function ensureAudio(){const Ctx=window.AudioContext||window.webkitAudioContext;if(!Ctx){toast('Geluid wordt niet ondersteund in deze browser');return false}if(!audioCtx){audioCtx=new Ctx();masterGain=audioCtx.createGain();masterGain.gain.value=volumeValue;masterGain.connect(audioCtx.destination)}if(audioCtx.state==='suspended')audioCtx.resume();return true}
+function tone(freq,duration=.18,type='triangle',gain=.13){if(!audioCtx||!masterGain)return;const osc=audioCtx.createOscillator(),g=audioCtx.createGain();osc.type=type;osc.frequency.value=freq;g.gain.setValueAtTime(gain,audioCtx.currentTime);g.gain.exponentialRampToValueAtTime(.001,audioCtx.currentTime+duration);osc.connect(g);g.connect(masterGain);osc.start();osc.stop(audioCtx.currentTime+duration)}
+function stopMusic(){musicActive=false;clearInterval(musicTimer);clearInterval(stopTimer);musicTimer=null;stopTimer=null;trackName=null;danceActive=true;$('#musicStatus').textContent='Er speelt nog geen muziek';$('#musicSub').textContent='Tik op een muziekkaart om te beginnen.';$('#playIcon').textContent='🔈';$('#musicEmoji').classList.remove('dancing');$('#musicTitle').textContent='Tijd voor een dansje!';$('#musicDescription').textContent='Kies een muziekspelletje hieronder.';$('#dancePrompt').innerHTML='<div><span>💃</span><br><strong>Klaar om te dansen?</strong></div>'}
+function playStep(){if(!musicActive||!trackName||!danceActive)return;const t=tracks[trackName];const note=t.notes[noteStep%t.notes.length];tone(note,.2,'triangle',.12);if(noteStep%4===0)tone(note/2,.25,'sine',.055);if(noteStep%8===4)tone(110,.08,'sine',.035);noteStep++}
+function startTrack(name){if(!ensureAudio())return;stopMusic();trackName=name;musicActive=true;noteStep=0;const t=tracks[name];$('#musicEmoji').textContent=t.emoji;$('#musicEmoji').classList.add('dancing');$('#musicTitle').textContent=t.title;$('#musicDescription').textContent=t.desc;$('#musicStatus').textContent='Speelt nu: '+t.title;$('#musicSub').textContent=name==='stop'?'Dans… luister goed naar de stilte!':'Een vrolijk muziekje voor Mats';$('#playIcon').textContent='🎶';danceActive=true;playStep();musicTimer=setInterval(playStep,260);if(name==='stop'){danceActive=true;stopDanceCycle()}}
+function stopDanceCycle(){if(!musicActive||trackName!=='stop')return;danceActive=!danceActive;if(danceActive){$('#musicSub').textContent='Daar gaat-ie weer! Dansen maar!';$('#dancePrompt').innerHTML='<div><span>💃</span><br><strong>Dansen maar!</strong></div>';stopTimer=setTimeout(stopDanceCycle,4500)}else{tone(880,.12,'sine',.08);$('#musicSub').textContent='STIL! Blijf stokstijf staan!';$('#dancePrompt').innerHTML='<div><span>🧊</span><br><strong>BEVRIES! Niet bewegen!</strong></div>';stopTimer=setTimeout(stopDanceCycle,1700)}}
+$$('[data-track]').forEach(b=>b.addEventListener('click',()=>startTrack(b.dataset.track)));
+$('#stopMusic').addEventListener('click',stopMusic);$('#volume').addEventListener('input',e=>{volumeValue=Number(e.target.value)/100;if(masterGain)masterGain.gain.value=volumeValue});
+const moves=[['Stamp als een olifant!','🐘'],['Spring als een kikker!','🐸'],['Waggel als een eend!','🦆'],['Draai rond als een tol!','🌀'],['Doe alsof je een tractor bestuurt!','🚜'],['Ren op je plek als een raceauto!','🏎️'],['Fladder als een vlinder!','🦋'],['Maak je zo groot als een reus!','🦖'],['Wiebelen als een pinguïn!','🐧'],['Klap drie keer in je handen!','👏'],['Maak een gekke honden-dans!','🐶'],['Spring zo hoog als je kunt!','⭐']];
+function newMove(){const m=moves[Math.floor(Math.random()*moves.length)];currentMove=m[0];$('#dancePrompt').innerHTML=`<div><span>${m[1]}</span><br><strong>${m[0]}</strong></div>`;$('#dancePrompt').classList.remove('dancing');void $('#dancePrompt').offsetWidth;$('#dancePrompt').classList.add('dancing')}
+$('#danceMove').addEventListener('click',newMove);$('#sayMove').addEventListener('click',()=>{if('speechSynthesis'in window){window.speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(currentMove);u.lang='nl-NL';u.rate=.88;window.speechSynthesis.speak(u)}else{if(ensureAudio())tone(660,.25)} });
+
+// Print only the selected activity. iPhone/iPad Safari offers Print via its share menu.
+function printScreen(id){$$('.screen').forEach(s=>s.classList.toggle('print-target',s.id===id));setTimeout(()=>window.print(),80)}
+window.addEventListener('afterprint',()=>$$('.screen').forEach(s=>s.classList.remove('print-target')));
+// Prepare the drawing area after layout has settled.
+// Stop audio if the page is hidden to avoid unexpected playback in the background.
+document.addEventListener('visibilitychange',()=>{if(document.hidden)stopMusic()});
+})();
+</script>
+</body>
+</html>
